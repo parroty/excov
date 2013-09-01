@@ -21,7 +21,11 @@ defmodule MyCoverage do
           IO.puts "\n[line]"
           {:ok, result} = :cover.analyse(mod, :calls, :line)
           Enum.each(result, fn(x) -> IO.inspect x end)
+
+          IO.puts "\n[file]"
+          IO.inspect mod.__info__(:compile)[:source]
         end
+
         IO.puts "ok"
       end
     end
