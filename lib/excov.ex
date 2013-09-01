@@ -1,0 +1,2 @@
+defmodule Excov do
+end
