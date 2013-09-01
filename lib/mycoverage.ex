@@ -1,5 +1,6 @@
 defmodule MyCoverage do
     def start(compile_path, opts) do
+      IO.puts "[compiled path] " <> compile_path <> "\n"
       IO.write "[modified] Cover compiling modules ... "
       :cover.start
       :cover.compile_beam_directory(compile_path |> to_char_list)
