@@ -12,6 +12,14 @@ defmodule MyCoverage do
         File.mkdir_p!(output)
         Enum.each :cover.modules, fn(mod) ->
           :cover.analyse_to_file(mod, '#{output}/#{mod}.html', [:html])
+
+          IO.puts "\n[clause]"
+          {:ok, result} = :cover.analyse(mod, :calls, :clause)
+          Enum.each(result, fn(x) -> IO.inspect x end)
+
+          IO.puts "\n[line]"
+          {:ok, result} = :cover.analyse(mod, :calls, :line)
+          Enum.each(result, fn(x) -> IO.inspect x end)
         end
         IO.puts "ok"
       end
