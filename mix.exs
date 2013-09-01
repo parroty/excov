@@ -18,7 +18,9 @@ defmodule Excov.Mixfile do
   # Returns the list of dependencies in the format:
   # { :foobar, "~> 0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
-    []
+    [
+      {:mock, ">= 0.0.3", github: "parroty/mock"}
+    ]
   end
 
   defp test_coverage do

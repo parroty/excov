@@ -7,13 +7,21 @@ defmodule Coveralls do
 
       System.at_exit fn(_) ->
         File.mkdir_p!(output)
-        analyze
+        calculate_stats(:cover.modules)
       end
     end
 
-    defp analyze do
-      Enum.each(:cover.modules, fn(module) ->
-        {:ok, lines} = :cover.analyse(module, :calls, :line)
+    def calculate_stats(modules) do
+      dict = HashDict.new
+      Enum.each(modules, fn(module) ->
+        {:ok, lines} = analyze(module)
+        Enum.each(lines, fn({{module, line}, count}) ->
+          HashDict.put(dict, {module, line}, count)
+        end)
       end)
+    end
+
+    defp analyze(module) do
+      :cover.analyse(module, :calls, :line)
     end
 end
