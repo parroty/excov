@@ -5,7 +5,9 @@ defmodule Excov.Mixfile do
     [ app: :excov,
       version: "0.0.1",
       elixir: "~> 0.10.2-dev",
-      deps: deps ]
+      deps: deps,
+      test_coverage: test_coverage
+    ]
   end
 
   # Configuration for the OTP application
@@ -17,5 +19,9 @@ defmodule Excov.Mixfile do
   # { :foobar, "~> 0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
     []
+  end
+
+  defp test_coverage do
+    [output: "cover", tool: MyCoverage]
   end
 end
