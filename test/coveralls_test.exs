@@ -27,7 +27,7 @@ defmodule CoverallsTest do
     assert(Coveralls.read_source(@source) == "defmodule Test do\n  def test do\n  end\nend\n")
   end
 
-  test "generate coverage" do
+  test_with_mock "generate coverage", Cover, [module_path: fn(_) -> @source end] do
     assert(Coveralls.generate_coverage(@module_hash) == [[0, 1, nil, nil]])
   end
 end

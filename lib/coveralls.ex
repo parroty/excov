@@ -18,13 +18,14 @@ defmodule Coveralls do
 
   def generate_coverage(hash) do
     Enum.map(hash.keys, fn(module) ->
-      count = get_source_line_count(module)
-      do_generate_coverage(HashDict.fetch!(hash, module), count)
+      total = get_source_line_count(module)
+      do_generate_coverage(HashDict.fetch!(hash, module), total - 1, [])
     end)
   end
 
-  def do_generate_coverage(count_hash, count) do
-    [0, 1, nil, nil]
+  def do_generate_coverage(_hash, 0, acc),   do: acc
+  def do_generate_coverage(hash, index, acc) do
+    do_generate_coverage(hash, index - 1, [HashDict.get(hash, index, nil) | acc])
   end
 
   def get_source_line_count(module) do
