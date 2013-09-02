@@ -20,7 +20,7 @@ defmodule Coveralls do
 
   def generate_json(source_info) do
     JSON.generate([
-      service_job_id: "1234567890",
+      service_job_id: Cover.get_job_id,
       service_name: "travis-ci",
       source_files: source_info
     ])
@@ -93,5 +93,9 @@ defmodule Cover do
 
   def module_path(module) do
     module.__info__(:compile)[:source]
+  end
+
+  def get_job_id do
+    String.from_char_list!(:os.getenv("TRAVIS_JOB_ID"))
   end
 end
