@@ -4,7 +4,8 @@ defmodule Coveralls do
     output = opts[:output]
     System.at_exit fn(_) ->
       File.mkdir_p!(output)
-      calculate_stats(Cover.modules)
+      stats = calculate_stats(Cover.modules)
+      generate_json(stats)
     end
   end
 
@@ -13,6 +14,14 @@ defmodule Coveralls do
       {:ok, lines} = Cover.analyze(module)
       analyze_lines(lines, dict)
     end)
+  end
+
+  def generate_json(stats) do
+
+  end
+
+  def read_source(file_path) do
+    File.read!(file_path)
   end
 
   defp analyze_lines(lines, dict) do
@@ -34,5 +43,9 @@ defmodule Cover do
 
   def analyze(module) do
     :cover.analyse(module, :calls, :line)
+  end
+
+  def module_path(module) do
+    module.__info__(:compile)[:source]
   end
 end
