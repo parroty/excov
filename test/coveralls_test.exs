@@ -3,9 +3,8 @@ defmodule CoverallsTest do
   import Mock
 
   @stats_value [{{Coveralls, 1}, 0}, {{Coveralls, 2}, 1}]
-  @modules [Coveralls]
-  @source "test/fixtures/test.ex"
-
+  @modules     [Coveralls]
+  @source      "test/fixtures/test.ex"
   @count_hash  HashDict.new([{1, 0}, {2, 1}])
   @module_hash HashDict.new([{Coveralls, @count_hash}])
 
