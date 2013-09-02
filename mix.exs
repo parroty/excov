@@ -26,6 +26,6 @@ defmodule Excov.Mixfile do
   end
 
   defp test_coverage do
-    [output: "cover", tool: MyCoverage]
+    [output: "cover", tool: Coveralls]
   end
 end

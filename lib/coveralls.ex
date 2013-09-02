@@ -101,7 +101,7 @@ defmodule Cover do
   end
 
   def module_path(module) do
-    module.__info__(:compile)[:source]
+    String.from_char_list!(module.__info__(:compile)[:source])
   end
 
   def get_job_id do
