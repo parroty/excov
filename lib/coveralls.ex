@@ -1,4 +1,6 @@
 defmodule Coveralls do
+  @url "https://coveralls.io/api/v1/jobs"
+
   def start(compile_path, opts) do
     Cover.compile(compile_path)
     output = opts[:output]
@@ -8,6 +10,7 @@ defmodule Coveralls do
       coverage = generate_coverage(stats)
       info     = generate_source_info(coverage)
       json     = generate_json(info)
+      IO.inspect json
     end
   end
 
@@ -16,6 +19,12 @@ defmodule Coveralls do
       {:ok, lines} = Cover.analyze(module)
       analyze_lines(lines, dict)
     end)
+  end
+
+  def post_json(json) do
+    HTTPotion.start
+    response = HTTPotion.post(@url, json)
+    response.body
   end
 
   def generate_json(source_info) do

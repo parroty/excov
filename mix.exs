@@ -20,7 +20,8 @@ defmodule Excov.Mixfile do
   defp deps do
     [
       {:mock, ">= 0.0.3", github: "parroty/mock"},
-      {:exjson, github: "guedes/exjson"}
+      {:exjson, github: "guedes/exjson"},
+      {:httpotion, github: "parroty/httpotion"},
     ]
   end
 
