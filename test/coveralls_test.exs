@@ -6,6 +6,9 @@ defmodule CoverallsTest do
   @modules [Coveralls]
   @source "test/fixtures/test.ex"
 
+  @count_hash  HashDict.new([{1, 0}, {2, 1}])
+  @module_hash HashDict.new([{Coveralls, @count_hash}])
+
   test_with_mock "start", Cover, [compile: fn(_) -> nil end,
                                   modules: fn -> @modules end,
                                   analyze: fn(_) -> {:ok, @stats_value} end] do
@@ -13,21 +16,18 @@ defmodule CoverallsTest do
   end
 
   test_with_mock "calculate stats", Cover, [analyze: fn(_) -> {:ok, @stats_value} end] do
-    count_hash  = HashDict.new([{1, 0}, {2, 1}])
-    module_hash = HashDict.new([{Coveralls, count_hash}])
-    assert(Coveralls.calculate_stats([Coveralls]) == module_hash)
+    assert(Coveralls.calculate_stats([Coveralls]) == @module_hash)
   end
 
   test_with_mock "get source line count", Cover, [module_path: fn(_) -> @source end] do
     assert(Coveralls.get_source_line_count([Coveralls]) == 5)
   end
 
-
   test "read file" do
     assert(Coveralls.read_source(@source) == "defmodule Test do\n  def test do\n  end\nend\n")
   end
 
   test "generate coverage" do
-#    assert(Coveralls.generate_coverage(@stats_value) == nil)
+    assert(Coveralls.generate_coverage(@module_hash) == [[0, 1, nil, nil]])
   end
 end
