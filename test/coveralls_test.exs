@@ -42,7 +42,13 @@ defmodule CoverallsTest do
   end
 
   test_with_mock "generate json", Cover, [module_path: fn(_) -> @source end, get_job_id: fn -> "1234567890" end] do
-    assert(Coveralls.generate_json(@source_info) == "{\"service_job_id\":\"1234567890\",\"service_name\":\"travis-ci\",\"source_files\":[{\"name\":\"test.ex\",\"source\":\"defmodule Test do\\n  def test do\\n  end\\nend\\n\",\"coverage\":[0,1,\"nil\",\"nil\"]}]}")
+    assert(Coveralls.generate_json(@source_info) ==
+       "{\"service_job_id\":\"1234567890\"," <>
+         "\"service_name\":\"travis-ci\"," <>
+         "\"source_files\":" <>
+           "[{\"name\":\"test.ex\"," <>
+             "\"source\":\"defmodule Test do\\n  def test do\\n  end\\nend\\n\"," <>
+             "\"coverage\":[0,1,\"nil\",\"nil\"]}]}")
   end
 
 end
