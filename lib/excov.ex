@@ -1,6 +1,6 @@
 defmodule Excov do
   def plus(x, y, flag // true) do
-    IO.inspect __FILE__
+    #IO.inspect __FILE__
     if flag do
       _ = x + y
       x + y
