@@ -5,7 +5,7 @@ defmodule Coveralls do
     System.at_exit fn(_) ->
       File.mkdir_p!(output)
       stats = calculate_stats(Cover.modules)
-      generate_json(stats)
+      generate_coverage(stats)
     end
   end
 
@@ -16,18 +16,23 @@ defmodule Coveralls do
     end)
   end
 
-  def generate_json(stats) do
-
+  def generate_coverage(stats) do
+#    Enum.
   end
 
   def read_source(file_path) do
     File.read!(file_path)
   end
 
-  defp analyze_lines(lines, dict) do
-    Enum.reduce(lines, dict, fn({{module, line}, count}, dict) ->
-      HashDict.put(dict, {module, line}, count)
+  defp analyze_lines(lines, module_hash) do
+    Enum.reduce(lines, module_hash, fn({{module, line}, count}, module_hash) ->
+      add_counts(module_hash, module, line, count)
     end)
+  end
+
+  defp add_counts(module_hash, module, line, count) do
+    count_hash = HashDict.get(module_hash, module, HashDict.new)
+    HashDict.put(module_hash, module, HashDict.put(count_hash, line, count))
   end
 end
 

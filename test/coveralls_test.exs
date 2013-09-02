@@ -13,14 +13,16 @@ defmodule CoverallsTest do
   end
 
   test_with_mock "calculate stats", Cover, [analyze: fn(_) -> {:ok, @stats_value} end] do
-    assert(Coveralls.calculate_stats([Coveralls]) == HashDict.new(@stats_value))
+    count_hash  = HashDict.new([{1, 0}, {2, 1}])
+    module_hash = HashDict.new([{Coveralls, count_hash}])
+    assert(Coveralls.calculate_stats([Coveralls]) == module_hash)
   end
 
   test "read file" do
     assert(Coveralls.read_source(@source) == "defmodule Test do\n  def test do\n  end\nend\n")
   end
 
-  test "generate json" do
-    assert(Coveralls.generate_json(@stats_value) == nil)
+  test "generate coverage" do
+    assert(Coveralls.generate_coverage(@stats_value) == nil)
   end
 end
