@@ -23,11 +23,11 @@ defmodule CoverallsTest do
     assert(Coveralls.get_source_line_count([Coveralls]) == 5)
   end
 
-  test "read file" do
+  test "read source file" do
     assert(Coveralls.read_source(@source) == "defmodule Test do\n  def test do\n  end\nend\n")
   end
 
   test_with_mock "generate coverage", Cover, [module_path: fn(_) -> @source end] do
-    assert(Coveralls.generate_coverage(@module_hash) == [[0, 1, nil, nil]])
+    assert(Coveralls.generate_coverage(@module_hash) == [{Coveralls, [0, 1, nil, nil]}])
   end
 end
