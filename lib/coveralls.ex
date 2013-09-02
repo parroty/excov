@@ -16,8 +16,23 @@ defmodule Coveralls do
     end)
   end
 
-  def generate_coverage(stats) do
-#    Enum.
+  def generate_coverage(hash) do
+    Enum.map(hash.keys, fn(module) ->
+      count = get_source_line_count(module)
+      do_generate_coverage(hash.fetch(module), count)
+    end)
+  end
+
+  def do_generate_coverage(count_hash, count) do
+
+  end
+
+  def get_source_line_count(module) do
+    Cover.module_path(module) |> read_source |> count_lines
+  end
+
+  defp count_lines(string) do
+    1 + Enum.count(to_char_list(string), fn(x) -> x == ?\n end)
   end
 
   def read_source(file_path) do
