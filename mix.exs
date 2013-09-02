@@ -19,7 +19,8 @@ defmodule Excov.Mixfile do
   # { :foobar, "~> 0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
     [
-      {:mock, ">= 0.0.3", github: "parroty/mock"}
+      {:mock, ">= 0.0.3", github: "parroty/mock"},
+      {:exjson, github: "guedes/exjson"}
     ]
   end
 

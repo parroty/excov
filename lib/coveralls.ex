@@ -6,7 +6,8 @@ defmodule Coveralls do
       File.mkdir_p!(output)
       stats    = calculate_stats(Cover.modules)
       coverage = generate_coverage(stats)
-      generate_source_info(coverage)
+      info     = generate_source_info(coverage)
+      json     = generate_json(info)
     end
   end
 
@@ -15,6 +16,14 @@ defmodule Coveralls do
       {:ok, lines} = Cover.analyze(module)
       analyze_lines(lines, dict)
     end)
+  end
+
+  def generate_json(source_info) do
+    JSON.generate([
+      service_job_id: "1234567890",
+      service_name: "travis-ci",
+      source_files: source_info
+    ])
   end
 
   def generate_source_info(coverage) do

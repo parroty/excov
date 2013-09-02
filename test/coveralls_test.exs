@@ -10,6 +10,10 @@ defmodule CoverallsTest do
   @module_hash HashDict.new([{Coveralls, @count_hash}])
   @counts      [0, 1, nil, nil]
   @coverage    [{Coveralls, @counts}]
+  @source_info [[name: "test.ex",
+                 source: @content,
+                 coverage: @counts
+               ]]
 
   test_with_mock "start", Cover, [compile: fn(_) -> nil end,
                                   modules: fn -> @modules end,
@@ -34,12 +38,11 @@ defmodule CoverallsTest do
   end
 
   test_with_mock "generate source info", Cover, [module_path: fn(_) -> @source end] do
-    assert(Coveralls.generate_source_info(@coverage) == [
-      [
-        name: "test.ex",
-        source: @content,
-        coverage: @counts
-      ]
-    ])
+    assert(Coveralls.generate_source_info(@coverage) == @source_info)
   end
+
+  test_with_mock "generate json", Cover, [module_path: fn(_) -> @source end] do
+    assert(Coveralls.generate_json(@source_info) == "{\"service_job_id\":\"1234567890\",\"service_name\":\"travis-ci\",\"source_files\":[{\"name\":\"test.ex\",\"source\":\"defmodule Test do\\n  def test do\\n  end\\nend\\n\",\"coverage\":[0,1,\"nil\",\"nil\"]}]}")
+  end
+
 end
