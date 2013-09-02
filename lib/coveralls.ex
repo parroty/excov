@@ -4,8 +4,9 @@ defmodule Coveralls do
     output = opts[:output]
     System.at_exit fn(_) ->
       File.mkdir_p!(output)
-      stats = calculate_stats(Cover.modules)
-      generate_coverage(stats)
+      stats    = calculate_stats(Cover.modules)
+      coverage = generate_coverage(stats)
+      generate_source_info(coverage)
     end
   end
 
@@ -13,6 +14,16 @@ defmodule Coveralls do
     Enum.reduce(modules, HashDict.new, fn(module, dict) ->
       {:ok, lines} = Cover.analyze(module)
       analyze_lines(lines, dict)
+    end)
+  end
+
+  def generate_source_info(coverage) do
+    Enum.map(coverage, fn({module, stats}) ->
+      [
+        name: Cover.module_path(module) |> Path.basename,
+        source: read_module_source(module),
+        coverage: stats
+      ]
     end)
   end
 
@@ -30,11 +41,15 @@ defmodule Coveralls do
   end
 
   def get_source_line_count(module) do
-    Cover.module_path(module) |> read_source |> count_lines
+    read_module_source(module) |> count_lines
   end
 
   defp count_lines(string) do
     1 + Enum.count(to_char_list(string), fn(x) -> x == ?\n end)
+  end
+
+  def read_module_source(module) do
+    Cover.module_path(module) |> read_source
   end
 
   def read_source(file_path) do
