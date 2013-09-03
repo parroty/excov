@@ -1,5 +1,8 @@
 defmodule Coveralls do
   @url "https://coveralls.io/api/v1/jobs"
+  @json_file_path "tmp"
+  @json_file_name "post.json"
+  @post_cmd "post.sh"
 
   def start(compile_path, opts) do
     Cover.compile(compile_path)
@@ -10,8 +13,7 @@ defmodule Coveralls do
       coverage = generate_coverage(stats)
       info     = generate_source_info(coverage)
       json     = generate_json(info)
-      #IO.puts json
-      IO.inspect post_json(json)
+      save_json(json, @json_file_path, @json_file_name)
     end
   end
 
@@ -22,29 +24,33 @@ defmodule Coveralls do
     end)
   end
 
-  def post_json(json) do
-    headers = [
-      {"Content-Type","multipart/form-data"},
-      {"Content-Disposition", "form-data; name=\"json_file\""}
-    ]
-
-    HTTPotion.start
-    response = HTTPotion.post(@url, json, headers)
-    response.body
+  def save_json(json, file_path, file_name) do
+    File.mkdir_p!(file_path)
+    File.write!(Path.join([file_path, file_name]), json)
+    IO.inspect System.cwd()
+    IO.puts System.cmd(Path.join([System.cwd, @post_cmd]))
   end
 
-  def generate_json(source_info) do
-    # JSON.encode!([
-    #   service_job_id: Cover.get_job_id,
-    #   service_name: "travis-ci",
-    #   source_files: source_info
-    # ])
+  # def post_json(json) do
+  #   HTTPotion.start
+  #   response = HTTPotion.post(@url, json)
+  #   response.body
+  # end
+
+  def generate_json_travis(source_info) do
     JSON.encode!([
-      repo_token: Cover.get_repo_token(),
+      service_job_id: Cover.get_job_id,
+      service_name: "travis-ci",
+      source_files: source_info
+    ])
+  end
+
+  def generate_json_local(source_info) do
+    JSON.encode!([
+      repo_token: Cover.get_repo_token,
       service_name: "local",
       source_files: source_info
     ])
-
   end
 
   def generate_source_info(coverage) do

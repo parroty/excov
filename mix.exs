@@ -23,6 +23,7 @@ defmodule Excov.Mixfile do
 #      {:exjson, github: "guedes/exjson"},
       {:json, github: "cblage/elixir-json"},
       {:httpotion, github: "parroty/httpotion"},
+      {:hackney, github: "benoitc/hackney"}
     ]
   end
 
