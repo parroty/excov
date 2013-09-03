@@ -89,7 +89,7 @@ defmodule Coveralls do
   end
 
   def read_source(file_path) do
-    File.read!(file_path)
+    File.read!(file_path) |> String.replace("\\n", "\\\\n")
   end
 
   defp analyze_lines(lines, module_hash) do
