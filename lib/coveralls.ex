@@ -17,13 +17,6 @@ defmodule Coveralls do
     end
   end
 
-  def calculate_stats(modules) do
-    Enum.reduce(modules, HashDict.new, fn(module, dict) ->
-      {:ok, lines} = Cover.analyze(module)
-      analyze_lines(lines, dict)
-    end)
-  end
-
   def save_json(json, file_path, file_name) do
     File.mkdir_p!(file_path)
     File.write!(Path.join([file_path, file_name]), json)
@@ -90,6 +83,13 @@ defmodule Coveralls do
 
   def read_source(file_path) do
     File.read!(file_path) |> String.replace("\\n", "\\\\n")
+  end
+
+  def calculate_stats(modules) do
+    Enum.reduce(modules, HashDict.new, fn(module, dict) ->
+      {:ok, lines} = Cover.analyze(module)
+      analyze_lines(lines, dict)
+    end)
   end
 
   defp analyze_lines(lines, module_hash) do
