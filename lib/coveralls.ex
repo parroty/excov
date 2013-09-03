@@ -49,7 +49,7 @@ defmodule Coveralls do
   def generate_source_info(coverage) do
     Enum.map(coverage, fn({module, stats}) ->
       [
-        name: Cover.module_path(module) |> Path.basename,
+        name: Cover.module_path(module),
         source: read_module_source(module),
         coverage: stats
       ]
