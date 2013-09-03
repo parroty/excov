@@ -10,7 +10,9 @@ defmodule Coveralls do
       coverage = generate_coverage(stats)
       info     = generate_source_info(coverage)
       json     = generate_json(info)
-      IO.inspect json
+      #IO.inspect json
+      IO.puts json
+      #IO.inspect post_json(json)
     end
   end
 
@@ -28,7 +30,7 @@ defmodule Coveralls do
   end
 
   def generate_json(source_info) do
-    JSON.generate([
+    JSON.encode!([
       service_job_id: Cover.get_job_id,
       service_name: "travis-ci",
       source_files: source_info

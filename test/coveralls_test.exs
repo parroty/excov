@@ -48,7 +48,7 @@ defmodule CoverallsTest do
          "\"source_files\":" <>
            "[{\"name\":\"test.ex\"," <>
              "\"source\":\"defmodule Test do\\n  def test do\\n  end\\nend\\n\"," <>
-             "\"coverage\":[0,1,\"nil\",\"nil\"]}]}")
+             "\"coverage\":[0,1,null,null]}]}")
   end
 
 end

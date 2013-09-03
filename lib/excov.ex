@@ -30,7 +30,7 @@ defmodule Excov2 do
 
   defmodule ExCov3 do
     def hello do
-      IO.puts "hello"
+#      IO.puts "hello"
     end
   end
 end
