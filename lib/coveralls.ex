@@ -47,19 +47,19 @@ defmodule Coveralls do
   end
 
   def generate_source_info(coverage) do
-    Enum.map(coverage, fn({module, stats}) ->
+    Enum.map(coverage, fn({file_path, stats}) ->
       [
-        name: Cover.module_path(module),
-        source: read_module_source(module),
+        name: file_path,
+        source: read_source(file_path),
         coverage: stats
       ]
     end)
   end
 
   def generate_coverage(hash) do
-    Enum.map(hash.keys, fn(module) ->
-      total = get_source_line_count(module)
-      {module, do_generate_coverage(HashDict.fetch!(hash, module), total - 1, [])}
+    Enum.map(hash.keys, fn(file_path) ->
+      total = get_source_line_count(file_path)
+      {file_path, do_generate_coverage(HashDict.fetch!(hash, file_path), total - 1, [])}
     end)
   end
 
@@ -69,8 +69,8 @@ defmodule Coveralls do
     do_generate_coverage(hash, index - 1, [count | acc])
   end
 
-  def get_source_line_count(module) do
-    read_module_source(module) |> count_lines
+  def get_source_line_count(file_path) do
+    read_source(file_path) |> count_lines
   end
 
   defp count_lines(string) do

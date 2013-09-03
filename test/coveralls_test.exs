@@ -26,7 +26,7 @@ defmodule CoverallsTest do
   end
 
   test_with_mock "get source line count", Cover, [module_path: fn(_) -> @source end] do
-    assert(Coveralls.get_source_line_count([Coveralls]) == 5)
+    assert(Coveralls.get_source_line_count(@source) == 5)
   end
 
   test "read source file" do
