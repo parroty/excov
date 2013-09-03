@@ -10,9 +10,8 @@ defmodule Coveralls do
       coverage = generate_coverage(stats)
       info     = generate_source_info(coverage)
       json     = generate_json(info)
-      #IO.inspect json
-      IO.puts json
-      #IO.inspect post_json(json)
+      #IO.puts json
+      IO.inspect post_json(json)
     end
   end
 
@@ -24,17 +23,28 @@ defmodule Coveralls do
   end
 
   def post_json(json) do
+    headers = [
+      {"Content-Type","multipart/form-data"},
+      {"Content-Disposition", "form-data; name=\"json_file\""}
+    ]
+
     HTTPotion.start
-    response = HTTPotion.post(@url, json)
+    response = HTTPotion.post(@url, json, headers)
     response.body
   end
 
   def generate_json(source_info) do
+    # JSON.encode!([
+    #   service_job_id: Cover.get_job_id,
+    #   service_name: "travis-ci",
+    #   source_files: source_info
+    # ])
     JSON.encode!([
-      service_job_id: Cover.get_job_id,
-      service_name: "travis-ci",
+      repo_token: Cover.get_repo_token(),
+      service_name: "local",
       source_files: source_info
     ])
+
   end
 
   def generate_source_info(coverage) do
@@ -108,5 +118,9 @@ defmodule Cover do
 
   def get_job_id do
     String.from_char_list!(:os.getenv("TRAVIS_JOB_ID"))
+  end
+
+  def get_repo_token do
+    String.from_char_list!(:os.getenv("COVERALLS_REPO_TOKEN"))
   end
 end

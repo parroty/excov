@@ -41,10 +41,10 @@ defmodule CoverallsTest do
     assert(Coveralls.generate_source_info(@coverage) == @source_info)
   end
 
-  test_with_mock "generate json", Cover, [module_path: fn(_) -> @source end, get_job_id: fn -> "1234567890" end] do
+  test_with_mock "generate json", Cover, [module_path: fn(_) -> @source end, get_repo_token: fn -> "1234567890" end] do
     assert(Coveralls.generate_json(@source_info) ==
-       "{\"service_job_id\":\"1234567890\"," <>
-         "\"service_name\":\"travis-ci\"," <>
+       "{\"repo_token\":\"1234567890\"," <>
+         "\"service_name\":\"local\"," <>
          "\"source_files\":" <>
            "[{\"name\":\"test.ex\"," <>
              "\"source\":\"defmodule Test do\\n  def test do\\n  end\\nend\\n\"," <>
