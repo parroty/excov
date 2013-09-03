@@ -12,7 +12,7 @@ defmodule Coveralls do
       stats    = calculate_stats(Cover.modules)
       coverage = generate_coverage(stats)
       info     = generate_source_info(coverage)
-      json     = generate_json(info)
+      json     = generate_json_travis(info)
       save_json(json, @json_file_path, @json_file_name)
     end
   end

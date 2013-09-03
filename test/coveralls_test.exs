@@ -42,7 +42,7 @@ defmodule CoverallsTest do
   end
 
   test_with_mock "generate json", Cover, [module_path: fn(_) -> @source end, get_repo_token: fn -> "1234567890" end] do
-    assert(Coveralls.generate_json(@source_info) ==
+    assert(Coveralls.generate_json_local(@source_info) ==
        "{\"repo_token\":\"1234567890\"," <>
          "\"service_name\":\"local\"," <>
          "\"source_files\":" <>
