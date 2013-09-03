@@ -7,10 +7,10 @@ defmodule CoverallsTest do
   @source      "test/fixtures/test.ex"
   @content     "defmodule Test do\n  def test do\n  end\nend\n"
   @count_hash  HashDict.new([{1, 0}, {2, 1}])
-  @module_hash HashDict.new([{Coveralls, @count_hash}])
+  @module_hash HashDict.new([{"test/fixtures/test.ex", @count_hash}])
   @counts      [0, 1, nil, nil]
-  @coverage    [{Coveralls, @counts}]
-  @source_info [[name: "test.ex",
+  @coverage    [{"test/fixtures/test.ex", @counts}]
+  @source_info [[name: "test/fixtures/test.ex",
                  source: @content,
                  coverage: @counts
                ]]
@@ -21,7 +21,7 @@ defmodule CoverallsTest do
     assert(Coveralls.start("", [output: nil]) == :ok)
   end
 
-  test_with_mock "calculate stats", Cover, [analyze: fn(_) -> {:ok, @stats} end] do
+  test_with_mock "calculate stats", Cover, [analyze: fn(_) -> {:ok, @stats} end, module_path: fn(_) -> @source end] do
     assert(Coveralls.calculate_stats([Coveralls]) == @module_hash)
   end
 
@@ -46,7 +46,7 @@ defmodule CoverallsTest do
        "{\"repo_token\":\"1234567890\"," <>
          "\"service_name\":\"local\"," <>
          "\"source_files\":" <>
-           "[{\"name\":\"test.ex\"," <>
+           "[{\"name\":\"test\\/fixtures\\/test.ex\"," <>
              "\"source\":\"defmodule Test do\\n  def test do\\n  end\\nend\\n\"," <>
              "\"coverage\":[0,1,null,null]}]}")
   end

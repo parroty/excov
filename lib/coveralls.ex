@@ -99,8 +99,9 @@ defmodule Coveralls do
   end
 
   defp add_counts(module_hash, module, line, count) do
-    count_hash = HashDict.get(module_hash, module, HashDict.new)
-    HashDict.put(module_hash, module, HashDict.put(count_hash, line, count))
+    path = Cover.module_path(module)
+    count_hash = HashDict.get(module_hash, path, HashDict.new)
+    HashDict.put(module_hash, path, HashDict.put(count_hash, line, count))
   end
 end
 
