@@ -21,7 +21,8 @@ defmodule Excov.Mixfile do
     [
       {:mock, ">= 0.0.3", github: "parroty/mock"},
 #      {:exjson, github: "guedes/exjson"},
-      {:json, github: "cblage/elixir-json"},
+#      {:json, github: "cblage/elixir-json"},
+      {:json, github: "parroty/elixir-json", branch: "fix"},
       {:httpotion, github: "parroty/httpotion"},
       {:hackney, github: "benoitc/hackney"}
     ]

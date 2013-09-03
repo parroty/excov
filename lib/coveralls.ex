@@ -82,7 +82,7 @@ defmodule Coveralls do
   end
 
   def read_source(file_path) do
-    File.read!(file_path) |> String.replace("\\n", "\\\\n")
+    File.read!(file_path)
   end
 
   def calculate_stats(modules) do
