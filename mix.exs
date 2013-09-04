@@ -6,7 +6,9 @@ defmodule Excov.Mixfile do
       version: "0.0.1",
       elixir: "~> 0.10.2",
       deps: deps,
-      test_coverage: test_coverage
+      env: [
+        coveralls: [test_coverage: test_coveralls]
+      ]
     ]
   end
 
@@ -27,7 +29,7 @@ defmodule Excov.Mixfile do
     ]
   end
 
-  defp test_coverage do
-    [output: "cover", tool: Coveralls]
+  defp test_coveralls do
+    [output: "ebin", tool: Coveralls]
   end
 end
