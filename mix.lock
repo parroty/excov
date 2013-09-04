@@ -1,7 +1,5 @@
-[ "hackney": {:git, "git://github.com/benoitc/hackney.git", "25a7fa2115680a09c0e932f71f22082b29d1b714", []},
-  "httpotion": {:git, "git://github.com/parroty/httpotion.git", "acd2322822eae7652ad4a1aeb82c67d903a198e3", []},
+[ "httpotion": {:git, "git://github.com/parroty/httpotion.git", "acd2322822eae7652ad4a1aeb82c67d903a198e3", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "866b0ff5aca229f1ef53653eabc8ed1720c13cd6", []},
-  "json": {:git, "git://github.com/parroty/elixir-json.git", "81ab64035eecc68747d278d954511c908b5651e5", [{:branch, "fix"}]},
+  "json": {:git, "git://github.com/cblage/elixir-json.git", "3573eb996c893d384a58ad47e83f48a82fa9d990", []},
   "meck": {:git, "git://github.com/eproxus/meck.git", "1286aba1cb6bbd6c9fc3f817740758b224843ee7", []},
-  "mimetypes": {:git, "https://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", [{:ref, "master"}]},
   "mock": {:git, "git://github.com/parroty/mock.git", "e31b21af0117bb26da28d2d38cf7b73fb3b482d9", []} ]

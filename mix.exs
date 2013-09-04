@@ -4,7 +4,7 @@ defmodule Excov.Mixfile do
   def project do
     [ app: :excov,
       version: "0.0.1",
-      elixir: "~> 0.10.2-dev",
+      elixir: "~> 0.10.2",
       deps: deps,
       test_coverage: test_coverage
     ]
@@ -21,10 +21,9 @@ defmodule Excov.Mixfile do
     [
       {:mock, ">= 0.0.3", github: "parroty/mock"},
 #      {:exjson, github: "guedes/exjson"},
-#      {:json, github: "cblage/elixir-json"},
-      {:json, github: "parroty/elixir-json", branch: "fix"},
-      {:httpotion, github: "parroty/httpotion"},
-      {:hackney, github: "benoitc/hackney"}
+      {:json, github: "cblage/elixir-json"},
+      {:httpotion, github: "parroty/httpotion"}
+#      {:hackney, github: "benoitc/hackney"}
     ]
   end
 
